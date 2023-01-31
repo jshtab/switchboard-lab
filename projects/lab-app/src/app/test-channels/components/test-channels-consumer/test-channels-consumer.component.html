@@ -1,0 +1,7 @@
+<ng-template #noContent>
+    <b>No content!</b>
+</ng-template>
+
+<ng-container *ngIf="message$ | async as message; else noContent">
+    <b>Content:</b> {{message}}
+</ng-container>
