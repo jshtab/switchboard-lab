@@ -4,7 +4,7 @@ import { Channel, Channels } from '../channel';
 import { ChannelsDirective } from './channel.directive';
 
 describe('ChannelsDirective', () => {
-  const testChannel = Symbol() as Channel<string>
+  const testChannel = {} as Channel<string>
 
   it('should create an instance', () => {
     const directive = new ChannelsDirective();

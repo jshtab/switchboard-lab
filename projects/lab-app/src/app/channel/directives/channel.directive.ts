@@ -1,6 +1,6 @@
 import { Directive, Input } from '@angular/core';
 import { Observable, ReplaySubject, switchMap } from 'rxjs';
-import { Channel, Channels } from '../channel';
+import { ActiveChannels, Channel, Channels } from '../channel';
 
 /**
  * Provide channels to an element.
@@ -9,12 +9,13 @@ import { Channel, Channels } from '../channel';
   selector: '[appChannels]',
   standalone: true,
   providers: [
-    {provide: Channels, useExisting: ChannelsDirective}
+    {provide: ActiveChannels, useExisting: ChannelsDirective}
   ]
 })
-export class ChannelsDirective implements Channels {
+export class ChannelsDirective implements ActiveChannels {
 
   private currentChannels = new ReplaySubject<Channels>(1);
+  public channels: Observable<Channels | undefined> = this.currentChannels.asObservable();
 
   @Input()
   public set appChannels(appChannels: Channels) {
@@ -22,11 +23,5 @@ export class ChannelsDirective implements Channels {
   }
 
   constructor() { }
-
-  public get<T>(token: Channel<T>): Observable<T> {
-    return this.currentChannels.pipe(
-      switchMap((channels) => channels.get(token))
-    )
-  }
 
 }

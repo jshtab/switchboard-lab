@@ -1,6 +1,11 @@
-import { Observable } from "rxjs"
+import { map, Observable, of, switchMap } from "rxjs"
 
-export interface Channel<T> extends Symbol {}
+// export interface Channel<T> extends Symbol {}
+
+/**
+ * Opaque token representing a single channel
+ */
+export type Channel<T> = {}
 
 /**
  * Group of several channels.
@@ -8,9 +13,25 @@ export interface Channel<T> extends Symbol {}
 export abstract class Channels {
     /**
      * Get the underlying observable for a given Channel.
-     * This method must be pure, the same token must become the same observable.
      * @param token requested channel
-     * @returns observable of that channel
+     * @returns observable of that channel, or undefined if none exist.
      */
-    public abstract get<T>(token: Channel<T>): Observable<T>;
+    public abstract get<T>(token: Channel<T>): Observable<T> | undefined;
+}
+
+export abstract class ActiveChannels {
+    public readonly abstract channels: Observable<Channels | undefined>
+}
+
+/**
+ * Extract a channel from an observable of active channels.
+ * @param channels observable of active channels
+ * @param channel the channel to extract
+ * @param fallback the value to emit when no channel is present
+ * @returns most recently emitted value from the most recently provided set of active channels
+ */
+export function activeChannel<T, R>(channels: Observable<Channels | undefined>, channel: Channel<T>, fallback: R): Observable<T | R> {
+    return channels.pipe(
+        switchMap((activeChannels) => activeChannels?.get(channel) ?? of(fallback))
+    )
 }

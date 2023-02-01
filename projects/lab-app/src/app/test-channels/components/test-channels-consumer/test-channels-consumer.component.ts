@@ -1,6 +1,6 @@
 import { Component, Optional } from '@angular/core';
 import { of } from 'rxjs';
-import { Channels } from '../../../channel/channel';
+import { activeChannel, ActiveChannels, Channels } from '../../../channel/channel';
 import { StringChannel } from '../../channels';
 
 @Component({
@@ -10,10 +10,10 @@ import { StringChannel } from '../../channels';
 })
 export class TestChannelsConsumerComponent {
 
-  message$ = this.channels?.get(StringChannel) ?? of();
+  message$ = activeChannel(this.channels.channels, StringChannel, null);
 
   constructor(
-    @Optional() private channels?: Channels
+    private channels: ActiveChannels
   ) { }
 
 }
