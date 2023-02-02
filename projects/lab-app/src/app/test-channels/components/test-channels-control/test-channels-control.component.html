@@ -1,0 +1,9 @@
+<ng-template #noContent>
+    <b>No content!</b>
+</ng-template>
+
+<ng-container *ngIf="control$ | async as control; else noContent">
+    <form [formGroup]="control">
+        <input type="text" formControlName="string">
+    </form>
+</ng-container>

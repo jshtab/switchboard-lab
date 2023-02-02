@@ -1,9 +1,26 @@
 
-<ul>
-    <li>
-        <app-test-channels-consumer [appChannels]="channels"></app-test-channels-consumer>
-    </li>
-    <li>
-        <app-test-channels-consumer [appChannels]="channels"></app-test-channels-consumer>
-    </li>
-</ul>
+<section id="handles" class="sectionList">
+    <button (click)="addHandle()">Add Producer</button>
+    <section class="handle" *ngFor="let handle of handles">
+        <div class="handleControl">
+            <div class="title">Handle: {{handle}}</div>
+            <button (click)="removeHandle(handle)">Remove</button>
+        </div>
+        <app-test-channels-control [appHandle]="handle"></app-test-channels-control>
+    </section>
+</section>
+<section id="consumers" class="sectionList">
+    <button (click)="addConsumer()">Add Consumer</button>
+    <section class="consumer" *ngFor="let consumer of consumers.controls | keyvalue">
+        <div class="consumerControl">
+            <div class="title">Consumer: {{consumer.key}}</div>
+            <select [formControl]="consumer.value">
+                <option value="">(No Handle)</option>
+                <option *ngFor="let handle of handles" [ngValue]="handle">{{handle}}</option>
+            </select>
+            <button (click)="removeConsumer(consumer.key)">Remove</button>
+        </div>
+        <app-test-channels-consumer *ngIf="consumer.value.valueChanges | async as handle" [appHandle]="handle"></app-test-channels-consumer>
+    </section>
+</section>
+

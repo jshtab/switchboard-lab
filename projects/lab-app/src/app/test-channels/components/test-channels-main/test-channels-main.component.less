@@ -1,0 +1,21 @@
+:host {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+:host>* {
+    margin: 1em;
+}
+
+:host>:nth-child(1) {
+    border-right: 0.1em grey dotted;
+}
+
+.sectionList section:not(:last-child) {
+    border-bottom: 0.1em dashed grey;
+}
+
+.sectionList section {
+    margin: 1em;
+    padding: 1em;
+}
