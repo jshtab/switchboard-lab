@@ -14,6 +14,23 @@ describe('SimpleSwitchboard', () => {
     expect(new SimpleSwitchboard()).toBeTruthy();
   });
 
+  it('should update handle subscribers when it changes', () => {
+    const instance = new SimpleSwitchboard();
+    const handle = Symbol("handle 1") as Handle;
+    const firstChannels = new NullChannels();
+    const secondChannels = new NullChannels();
+    
+    const observer = jasmine.createSpy("observer");
+    instance.getChannels(handle).subscribe(observer);
+    expect(observer).withContext("unregistered channel should emit undefined").toHaveBeenCalledWith(undefined);
+    
+    instance.setHandle(handle, firstChannels);
+    expect(observer).withContext("subscribers should be informed").toHaveBeenCalledWith(firstChannels);
+
+    instance.setHandle(handle, secondChannels);
+    expect(observer).withContext('subscribers should be informed').toHaveBeenCalledWith(secondChannels);
+  })
+
   describe('getHandles', () => {
     it('should return all registered handles', () => {
       const instance = new SimpleSwitchboard();
