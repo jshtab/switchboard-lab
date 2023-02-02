@@ -1,7 +1,6 @@
-import { Component, Optional } from '@angular/core';
-import { of } from 'rxjs';
-import { activeChannel, ActiveChannels, Channels } from '../../../channel/channel';
-import { controlChannel, stringChannel } from '../../channels';
+import { Component } from '@angular/core';
+import { activeChannel, ActiveChannels } from '../../../channel/channel';
+import { stringChannel } from '../../channels';
 
 @Component({
   selector: 'app-test-channels-consumer',

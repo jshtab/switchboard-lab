@@ -1,4 +1,4 @@
-import { map, Observable, of, switchMap } from "rxjs"
+import { Observable, of, switchMap } from "rxjs"
 
 // export interface Channel<T> extends Symbol {}
 

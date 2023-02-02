@@ -1,6 +1,6 @@
 import { Directive, Input } from '@angular/core';
-import { map, Observable, of, ReplaySubject, switchMap } from 'rxjs';
-import { ActiveChannels, Channel, Channels } from '../../channel/channel';
+import { Observable, of, ReplaySubject, switchMap } from 'rxjs';
+import { ActiveChannels, Channels } from '../../channel/channel';
 import { Handle, Switchboard } from '../switchboard';
 
 /**

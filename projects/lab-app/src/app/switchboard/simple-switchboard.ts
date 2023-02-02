@@ -1,5 +1,5 @@
-import { BehaviorSubject, Observable, of } from "rxjs";
-import { Channel, Channels } from "../channel/channel";
+import { BehaviorSubject, Observable } from "rxjs";
+import { Channels } from "../channel/channel";
 import { Handle, Switchboard } from "./switchboard";
 
 /**

@@ -1,6 +1,6 @@
 import { Directive, Input } from '@angular/core';
-import { Observable, ReplaySubject, switchMap } from 'rxjs';
-import { ActiveChannels, Channel, Channels } from '../channel';
+import { Observable, ReplaySubject } from 'rxjs';
+import { ActiveChannels, Channels } from '../channel';
 
 /**
  * Provide channels to an element.
