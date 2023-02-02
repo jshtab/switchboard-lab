@@ -1,5 +1,5 @@
 import { Directive, Input } from '@angular/core';
-import { map, Observable, ReplaySubject, switchMap } from 'rxjs';
+import { map, Observable, of, ReplaySubject, switchMap } from 'rxjs';
 import { ActiveChannels, Channel, Channels } from '../../channel/channel';
 import { Handle, Switchboard } from '../switchboard';
 
@@ -16,13 +16,13 @@ import { Handle, Switchboard } from '../switchboard';
 })
 export class HandleDirective implements ActiveChannels {
 
-  private currentHandle = new ReplaySubject<Handle>(1);
+  private currentHandle = new ReplaySubject<Handle | undefined>(1);
   public readonly channels: Observable<Channels | undefined> = this.currentHandle.pipe(
-    switchMap((channel) => this.switchboard.getChannels(channel))
+    switchMap((channel) => channel ? this.switchboard.getChannels(channel) : of(undefined))
   )
 
   @Input()
-  public set appHandle(handle: Handle) {
+  public set appHandle(handle: Handle | undefined) {
     this.currentHandle.next(handle);
   }
 
