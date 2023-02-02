@@ -12,24 +12,24 @@ describe('ChannelsDirective', () => {
   });
 
   it('should provide updated values when channels change', () => {
-    const currentContent = of('test1');
-    const nextContent = of('test2');
+    const currentContent =  new ConstantChannels(of());
+    const nextContent = new ConstantChannels(of());
 
     const directive = new ChannelsDirective();
-    directive.appChannels = new ConstantChannels(currentContent);;
-    
+    directive.appChannels = currentContent
+
     const observer = jasmine.createSpy("consumer");
-    directive.get(testChannel).subscribe(observer)
+    directive.channels.subscribe(observer)
 
     expect(observer)
       .withContext("must call consumer with current channel content")
-      .toHaveBeenCalledWith('test1');
+      .toHaveBeenCalledWith(currentContent);
     
-    directive.appChannels = new ConstantChannels(nextContent)
+    directive.appChannels = nextContent
     
     expect(observer)
       .withContext("must call consumer with new channel content")
-      .toHaveBeenCalledWith('test2');
+      .toHaveBeenCalledWith(nextContent);
   })
 
 });
