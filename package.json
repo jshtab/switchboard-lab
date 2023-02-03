@@ -1,6 +1,7 @@
 {
   "name": "switchboard-lab",
   "version": "0.0.0",
+  "license": "ISC",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
