@@ -32,6 +32,17 @@ export abstract class ActiveChannels {
  */
 export function activeChannel<T, R>(channels: Observable<Channels | undefined>, channel: Channel<T>, fallback: R): Observable<T | R> {
     return channels.pipe(
-        switchMap((activeChannels) => activeChannels?.get(channel) ?? of(fallback))
+        switchMap((activeChannels) => activeChannels?.get(channel) ?? of(fallback)),
     )
+}
+
+
+/**
+ * For each emission of the source observable, emit the contents of the channel, or the fallback value if the channel is undefined.
+ * @param channel channel to extract
+ * @param fallback value to emit when no channel is available
+ * @returns operator function
+ */
+export function extractChannel<T, R>(channel: Channel<T>, fallback: R): {(source: Observable<Channels|undefined>): Observable<T|R>} {
+    return (channels) => activeChannel(channels, channel, fallback)
 }

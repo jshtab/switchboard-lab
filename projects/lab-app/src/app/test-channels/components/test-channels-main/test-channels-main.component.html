@@ -1,14 +1,14 @@
-
 <section id="handles" class="sectionList">
     <button (click)="addHandle()">Add Producer</button>
-    <section class="handle" *ngFor="let handle of handles">
+    <section class="handle" *ngFor="let handle of handles" [appHandle]="handle">
         <div class="handleControl">
             <div class="title">Handle: {{handle}}</div>
             <button (click)="removeHandle(handle)">Remove</button>
         </div>
-        <app-test-channels-control [appHandle]="handle"></app-test-channels-control>
+        <ng-container *ngComponentOutlet="controlComponent"></ng-container>
     </section>
 </section>
+
 <section id="consumers" class="sectionList">
     <button (click)="addConsumer()">Add Consumer</button>
     <section class="consumer" *ngFor="let consumer of consumers.controls | keyvalue">
@@ -20,7 +20,8 @@
             </select>
             <button (click)="removeConsumer(consumer.key)">Remove</button>
         </div>
-        <app-test-channels-consumer *ngIf="consumer.value.valueChanges | async as handle" [appHandle]="handle"></app-test-channels-consumer>
+        <ng-container *ngIf="consumer.value.valueChanges | async as handle" [appHandle]="handle">
+            <ng-container *ngComponentOutlet="consumerComponent"></ng-container>
+        </ng-container>
     </section>
 </section>
-

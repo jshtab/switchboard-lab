@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { activeChannel, ActiveChannels } from '../../../channel/channel';
+import { activeChannel, ActiveChannels, extractChannel } from '../../../channel/channel';
 import { stringChannel } from '../../channels';
 
 @Component({
@@ -9,10 +9,12 @@ import { stringChannel } from '../../channels';
 })
 export class TestChannelsConsumerComponent {
 
-  message$ = activeChannel(this.channels.channels, stringChannel, null);
+  message$ = this.activeChannels.channels.pipe(
+    extractChannel(stringChannel, null)
+  )
 
   constructor(
-    private channels: ActiveChannels
+    private activeChannels: ActiveChannels
   ) { }
 
 }

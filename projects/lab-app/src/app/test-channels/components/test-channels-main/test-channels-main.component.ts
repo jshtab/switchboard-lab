@@ -5,6 +5,8 @@ import { ChannelMap } from '../../../channel/channel-map';
 import { SimpleSwitchboard } from '../../../switchboard/simple-switchboard';
 import { Switchboard } from '../../../switchboard/switchboard';
 import { controlChannel, ControlChannelGroup, stringChannel } from '../../channels';
+import { TestChannelsConsumerComponent } from '../test-channels-consumer/test-channels-consumer.component';
+import { TestChannelsControlComponent } from '../test-channels-control/test-channels-control.component';
 
 @Component({
   selector: 'app-test-channels-main',
@@ -16,6 +18,9 @@ import { controlChannel, ControlChannelGroup, stringChannel } from '../../channe
   ]
 })
 export class TestChannelsMainComponent implements OnInit {
+
+  consumerComponent = TestChannelsConsumerComponent
+  controlComponent = TestChannelsControlComponent
 
   constructor(
     private switchboard: SimpleSwitchboard,
