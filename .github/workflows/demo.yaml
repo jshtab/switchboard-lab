@@ -17,13 +17,14 @@ jobs:
     - uses: actions/checkout@v3
     - name: npm setup
       uses: ng-easy/npm-setup@v1.7.2
-    - run: npm run build
+    - run: npm run build lab-app --base-href="/switchboard-lab/"
+      name: npm run build lab-app
     - name: Fix Routing on Pages
       run: cp dist/index.html dist/404.html
     - run: npm run test
     - name: Upload to Pages
       uses: actions/upload-pages-artifact@v1.0.7
       with:
-        path: dist
+        path: dist/lab-app
     - name: Deploy GitHub Pages site
       uses: actions/deploy-pages@v1.2.4
