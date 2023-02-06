@@ -12,13 +12,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js v18
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18.x
-        cache: 'npm'
+    - uses: ng-easy/npm-install@v2
     - run: npm run build
-    - run: npm run ci
+    - run: npm run test
     - name: Upload to Pages
       uses: actions/upload-pages-artifact@v1.0.7
       with:
