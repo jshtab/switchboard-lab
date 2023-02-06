@@ -17,8 +17,8 @@ jobs:
     - uses: actions/checkout@v3
     - name: npm setup
       uses: ng-easy/npm-setup@v1.7.2
-    - run: npm run build lab-app --base-href="/switchboard-lab/"
-      name: npm run build lab-app
+    - run: npx ng build lab-app --base-href="/switchboard-lab/"
+      name: ng build lab-app
     - name: Fix Routing on Pages
       run: cp dist/lab-app/index.html dist/lab-app/404.html
     - run: npm run test
