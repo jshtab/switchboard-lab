@@ -20,7 +20,7 @@ jobs:
     - run: npm run build lab-app --base-href="/switchboard-lab/"
       name: npm run build lab-app
     - name: Fix Routing on Pages
-      run: cp dist/index.html dist/404.html
+      run: cp dist/lab-app/index.html dist/lab-app/404.html
     - run: npm run test
     - name: Upload to Pages
       uses: actions/upload-pages-artifact@v1.0.7
