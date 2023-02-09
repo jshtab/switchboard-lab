@@ -11,6 +11,6 @@ export type Handle = {};
  */
 export abstract class Switchboard {
 
-    public abstract getChannels(handle: Handle): Observable<Channels | undefined>
+    public abstract getChannels(handle: Handle): Observable<Channels>
 
 }

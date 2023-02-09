@@ -16,13 +16,13 @@ import { Handle, Switchboard } from '../switchboard';
 })
 export class HandleDirective implements ActiveChannels {
 
-  private currentHandle = new ReplaySubject<Handle | undefined>(1);
-  public readonly channels: Observable<Channels | undefined> = this.currentHandle.pipe(
-    switchMap((channel) => channel ? this.switchboard.getChannels(channel) : of(undefined))
+  private currentHandle = new ReplaySubject<Handle>(1);
+  public readonly channels: Observable<Channels> = this.currentHandle.pipe(
+    switchMap((handle) => this.switchboard.getChannels(handle))
   )
 
   @Input()
-  public set appHandle(handle: Handle | undefined) {
+  public set appHandle(handle: Handle) {
     this.currentHandle.next(handle);
   }
 

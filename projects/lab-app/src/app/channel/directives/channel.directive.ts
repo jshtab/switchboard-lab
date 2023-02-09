@@ -15,7 +15,7 @@ import { ActiveChannels, Channels } from '../channel';
 export class ChannelsDirective implements ActiveChannels {
 
   private currentChannels = new ReplaySubject<Channels>(1);
-  public channels: Observable<Channels | undefined> = this.currentChannels.asObservable();
+  public channels: Observable<Channels> = this.currentChannels.asObservable();
 
   @Input()
   public set appChannels(appChannels: Channels) {

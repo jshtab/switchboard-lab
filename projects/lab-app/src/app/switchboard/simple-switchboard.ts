@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, ReplaySubject } from "rxjs";
 import { Channels } from "../channel/channel";
 import { Handle, Switchboard } from "./switchboard";
 
@@ -7,10 +7,10 @@ import { Handle, Switchboard } from "./switchboard";
  */
 export class SimpleSwitchboard implements Switchboard {
     
-    private handleMap = new Map<Handle, BehaviorSubject<Channels|undefined>>();
+    private handleMap = new Map<Handle, ReplaySubject<Channels>>();
     
-    public getChannels(handle: Handle): Observable<Channels | undefined> {
-        return this.getHandleSubject(handle)?.asObservable();
+    public getChannels(handle: Handle): Observable<Channels> {
+        return this.getHandleSubject(handle).asObservable();
     }
 
     /**
@@ -23,17 +23,17 @@ export class SimpleSwitchboard implements Switchboard {
         subject.next(channels);
     }
 
-    /**
-     * Return the current Channels object for a given handle.
-     * @param handle The handle to lookup
-     * @returns state snapshot, or undefined if not registered.
-     */
-    public getHandle(handle: Handle): Channels | undefined {
-        return this.getHandleSubject(handle)?.value
-    }
+    // /**
+    //  * Return the current Channels object for a given handle.
+    //  * @param handle The handle to lookup
+    //  * @returns state snapshot, or undefined if not registered.
+    //  */
+    // public getHandle(handle: Handle): Channels | undefined {
+    //     return this.getHandleSubject(handle)?.observed
+    // }
 
-    private getHandleSubject(handle: Handle): BehaviorSubject<Channels|undefined> {
-        const currentSubject = this.handleMap.get(handle) ?? new BehaviorSubject<Channels|undefined>(undefined)
+    private getHandleSubject(handle: Handle): ReplaySubject<Channels> {
+        const currentSubject = this.handleMap.get(handle) ?? new ReplaySubject<Channels>(1)
         this.handleMap.set(handle, currentSubject)
         return currentSubject;
     }

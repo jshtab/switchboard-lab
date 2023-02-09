@@ -20,7 +20,7 @@ export abstract class Channels {
 }
 
 export abstract class ActiveChannels {
-    public readonly abstract channels: Observable<Channels | undefined>
+    public readonly abstract channels: Observable<Channels>
 }
 
 /**
@@ -30,9 +30,9 @@ export abstract class ActiveChannels {
  * @param fallback the value to emit when no channel is present
  * @returns most recently emitted value from the most recently provided set of active channels
  */
-export function activeChannel<T, R>(channels: Observable<Channels | undefined>, channel: Channel<T>, fallback: R): Observable<T | R> {
+export function activeChannel<T, R>(channels: Observable<Channels>, channel: Channel<T>, fallback: R): Observable<T | R> {
     return channels.pipe(
-        switchMap((activeChannels) => activeChannels?.get(channel) ?? of(fallback)),
+        switchMap((activeChannels) => activeChannels.get(channel) ?? of(fallback)),
     )
 }
 
@@ -43,6 +43,6 @@ export function activeChannel<T, R>(channels: Observable<Channels | undefined>, 
  * @param fallback value to emit when no channel is available
  * @returns operator function
  */
-export function extractChannel<T, R>(channel: Channel<T>, fallback: R): {(source: Observable<Channels|undefined>): Observable<T|R>} {
+export function extractChannel<T, R>(channel: Channel<T>, fallback: R): {(source: Observable<Channels>): Observable<T|R>} {
     return (channels) => activeChannel(channels, channel, fallback)
 }
