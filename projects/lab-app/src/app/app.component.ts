@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { map, startWith, Subject, takeUntil } from 'rxjs';
+import { when } from './magic/listener';
 
 @Component({
   selector: 'app-root',
@@ -30,20 +31,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder) { }
 
-  private disabler(control: AbstractControl) {
-    return (condition: any) => condition ? control.disable() : control.enable();
-  }
-
-  private setupToggleListener(toggle: FormControl<boolean>, target: FormGroup) {
-    toggle.valueChanges.pipe(takeUntil(this.destroyed)).subscribe(this.disabler(target));
-  }
-
   ngOnInit(): void {
     const groups = this.example.controls;
     const toggles = this.example.controls.toggles.controls;
-    this.setupToggleListener(toggles.groupA, groups.groupA)
-    this.setupToggleListener(toggles.groupB, groups.groupB)
-    this.example.updateValueAndValidity();
+    when(toggles.groupA, (val) => val).disable(groups.groupA).and
+    .when(toggles.groupB, (val) => val).disable(groups.groupB)
+    .until(this.destroyed).subscribe();
   }
 
   ngOnDestroy(): void {
