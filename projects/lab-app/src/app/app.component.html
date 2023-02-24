@@ -1,1 +1,24 @@
 <app-test-channels-main></app-test-channels-main>
+
+
+<form [formGroup]="example">
+    <ng-container formGroupName="toggles">
+        <label for="groupA-toggle">Disable Group</label>
+        <input type="checkbox" formControlName="groupA" id="groupA-toggle">
+    </ng-container>
+    <fieldset formGroupName="groupA">
+        <label for="gAa">Example</label>
+        <input type="number" name="a" id="gAa" formControlName="a">
+    </fieldset>
+    <ng-container formGroupName="toggles">
+        <label for="groupB-toggle">Disable Group</label>
+        <input type="checkbox" formControlName="groupB" id="groupB-toggle">
+    </ng-container>
+    <fieldset formGroupName="groupB">
+        <label for="gBa">Example</label>
+        <input type="number" name="a" id="gBa" formControlName="a">
+    </fieldset>
+</form>
+
+<span>{{example.value | json}}</span>
+<span>{{example.valid | json}}</span>
