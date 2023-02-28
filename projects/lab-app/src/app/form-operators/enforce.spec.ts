@@ -3,22 +3,22 @@ import { of, Subject } from "rxjs";
 import { enforce } from "./enforce";
 
 describe('enforce', () => {
-    it('should apply validators when source emits true', () => {
+    it('should apply validators when source emits truthy', () => {
         const control = new FormControl(null);
-        of(true).pipe(enforce(control, [Validators.nullValidator])).subscribe();
+        of("truthy").pipe(enforce(control, [Validators.nullValidator])).subscribe();
         expect(control.hasValidator(Validators.nullValidator)).toBeTrue();
     })
 
-    it('should remove validators after source emits false later', () => {
+    it('should remove validators after source emits falsey later', () => {
         const control = new FormControl(null);
-        const source = new Subject<boolean>();
+        const source = new Subject<any>();
         const parameterized = (): ValidatorFn => (control) => null; // this is redundant but we check it anyway.
         const parameterized_instance = parameterized(); // if it fails, you have seriously broken something.
         source.pipe(enforce(control, [Validators.nullValidator, parameterized_instance])).subscribe();
-        source.next(true);
+        source.next("truthy");
         expect(control.hasValidator(Validators.nullValidator)).toBeTrue();
         expect(control.hasValidator(parameterized_instance)).withContext("identity check").toBeTrue();
-        source.next(false);
+        source.next(undefined);
         expect(control.hasValidator(Validators.nullValidator)).toBeFalse();
         expect(control.hasValidator(parameterized_instance)).withContext("identity check").toBeFalse();
     })

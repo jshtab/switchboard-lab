@@ -9,10 +9,10 @@ import { MonoTypeOperatorFunction, tap } from "rxjs";
  * @param opts enable/disable options
  * @returns operator function
  */
-export function enableControl(control: AbstractControl, opts?: {
+export function enableControl<T>(control: AbstractControl, opts?: {
     onlySelf?: boolean;
     emitEvent?: boolean;
-}): MonoTypeOperatorFunction<boolean> {
+}): MonoTypeOperatorFunction<T> {
     const initial = control.enabled;
     return input => input.pipe(
         tap(active => active ? control.enable(opts) : control.disable(opts)),
@@ -26,10 +26,10 @@ export function enableControl(control: AbstractControl, opts?: {
  * @param opts enable/disable options
  * @returns operator function
  */
-export function disableControl(control: AbstractControl, opts?: {
+export function disableControl<T>(control: AbstractControl, opts?: {
     onlySelf?: boolean;
     emitEvent?: boolean;
-}): MonoTypeOperatorFunction<boolean> {
+}): MonoTypeOperatorFunction<T> {
     const initial = control.enabled;
     return input => input.pipe(
         tap(active => active ? control.disable(opts) : control.enable(opts)),

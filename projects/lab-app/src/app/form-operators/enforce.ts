@@ -15,7 +15,7 @@ import { MonoTypeOperatorFunction, tap } from "rxjs";
  * @param validators the validator functions to apply/remove
  * @returns operator function
  */
-export function enforce(control: AbstractControl, validators: ValidatorFn[]): MonoTypeOperatorFunction<boolean> {
+export function enforce<T>(control: AbstractControl, validators: ValidatorFn[]): MonoTypeOperatorFunction<T> {
     return input => input.pipe(
         tap(active => active ? control.addValidators(validators) : control.removeValidators(validators)),
     )
