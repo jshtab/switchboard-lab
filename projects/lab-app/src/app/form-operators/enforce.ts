@@ -2,7 +2,7 @@ import { AbstractControl, ValidatorFn, Validators } from "@angular/forms";
 import { MonoTypeOperatorFunction, tap } from "rxjs";
 
 /**
- * Applies validators to controls for each emission of true, removes them otherwise.
+ * Applies validators to a control for each truthy emission, removes them otherwise.
  * 
  * This operator works by reference. When targeting the same control in different pipes
  * with identical validators, if one pipe is true and the other is false, then the

@@ -3,8 +3,8 @@ import { MonoTypeOperatorFunction, tap } from "rxjs";
 
 
 /**
- * Enables control for every emission of true, disables it otherwise.
- * @see `disableControl`
+ * Enables control for every truthy value, disables it otherwise.
+ * @see {@link disableControl} for inverse
  * @param control target to enable or disable
  * @param opts enable/disable options
  * @returns operator function
@@ -20,8 +20,8 @@ export function enableControl<T>(control: AbstractControl, opts?: {
 }
 
 /**
- * Disables control for every emission of true, enables it otherwise.
- * @see `enableControl`
+ * Disables control for every truthy value, enables it otherwise.
+ * @see {@link enableControl} for inverse
  * @param control target to enable or disable
  * @param opts enable/disable options
  * @returns operator function
