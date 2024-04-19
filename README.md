@@ -1,3 +1,9 @@
+# Important Notice
+
+This repository was created *before* the Angular 15 preview release of Signals, and their subsequent full release in Angular 16.
+This new feature in Angular renders all this entire project moot, it does exactly what I wanted, and better than I could ever do.
+A third-party add-on can't beat first-class support. This repository is now archived forever.
+
 ## switchboard-lab
 
 This repository contains a bunch of experiments with Angular application design, RxJS, and runtime component manipulation.
